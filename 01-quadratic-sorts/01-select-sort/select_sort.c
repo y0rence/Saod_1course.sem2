@@ -232,5 +232,5 @@ int main() {
     printf("\n 100 | %d  |      | %d |      |       |  %d |       |", movesCTheor + compsCTheor,
            comparisonsC + movesC, comparisonsEnhC + movesEnhC);
 
-    return 1;
+    return 0;
 }
