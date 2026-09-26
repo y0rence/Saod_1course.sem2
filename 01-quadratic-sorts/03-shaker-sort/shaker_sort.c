@@ -7,32 +7,39 @@
 #define POINTS 5
 
 void fill_inc(int a[], int n) {
-    for (int i = 0; i < n; i++) a[i] = i + 1;
+    for (int i = 0; i < n; i++)
+        a[i] = i + 1;
 }
 
 void fill_dec(int a[], int n) {
-    for (int i = 0; i < n; i++) a[i] = n - i;
+    for (int i = 0; i < n; i++)
+        a[i] = n - i;
 }
 
 void fill_rand(int a[], int n) {
-    for (int i = 0; i < n; i++) a[i] = rand() % 100;
+    for (int i = 0; i < n; i++)
+        a[i] = rand() % 100;
 }
 
 void copy_arr(const int src[], int dst[], int n) {
-    for (int i = 0; i < n; i++) dst[i] = src[i];
+    for (int i = 0; i < n; i++)
+        dst[i] = src[i];
 }
 
 int sum_arr(const int a[], int n) {
     int s = 0;
-    for (int i = 0; i < n; i++) s += a[i];
+    for (int i = 0; i < n; i++)
+        s += a[i];
     return s;
 }
 
 int runs_arr(const int a[], int n) {
-    if (n <= 0) return 0;
+    if (n <= 0)
+        return 0;
     int r = 1;
     for (int i = 1; i < n; i++) {
-        if (a[i] < a[i - 1]) r++;
+        if (a[i] < a[i - 1])
+            r++;
     }
     return r;
 }
@@ -61,7 +68,8 @@ void select_sort(int a[], int n, int *c, int *m) {
     for (int i = 0; i < n - 1; i++) {
         int k = i;
         for (int j = i + 1; j < n; j++) {
-            if (a[j] < a[k]) k = j;
+            if (a[j] < a[k])
+                k = j;
             (*c)++;
         }
         t = a[k];
@@ -136,8 +144,10 @@ void shaker_str(char s[], int n) {
 
 int max3(int a, int b, int c) {
     int x = a;
-    if (b > x) x = b;
-    if (c > x) x = c;
+    if (b > x)
+        x = b;
+    if (c > x)
+        x = c;
     return x;
 }
 
@@ -146,17 +156,21 @@ void graph(const int n[], const int v[], const int b[], const int s[], int count
     const int H = 600;
     const int O = 60;
 
-    if (count <= 0) return;
+    if (count <= 0)
+        return;
 
     int mx = 1;
     for (int i = 0; i < count; i++) {
         int t = max3(v[i], b[i], s[i]);
-        if (t > mx) mx = t;
+        if (t > mx)
+            mx = t;
     }
 
     sfVideoMode mode = {W, H, 32};
-    sfRenderWindow *win = sfRenderWindow_create(mode, "Graph (Mf+Cf)", sfDefaultStyle, sfWindowed, NULL);
-    if (!win) return;
+    sfRenderWindow *win =
+        sfRenderWindow_create(mode, "Graph (Mf+Cf)", sfDefaultStyle, sfWindowed, NULL);
+    if (!win)
+        return;
 
     sfVertexArray *axes = sfVertexArray_create();
     sfVertexArray_setPrimitiveType(axes, sfLines);
@@ -216,7 +230,8 @@ void graph(const int n[], const int v[], const int b[], const int s[], int count
     while (sfRenderWindow_isOpen(win)) {
         sfEvent e;
         while (sfRenderWindow_pollEvent(win, &e)) {
-            if (e.type == sfEvtClosed) sfRenderWindow_close(win);
+            if (e.type == sfEvtClosed)
+                sfRenderWindow_close(win);
         }
 
         sfRenderWindow_clear(win, sfWhite);
@@ -288,10 +303,14 @@ void graph(const int n[], const int v[], const int b[], const int s[], int count
     }
 
     sfCircleShape_destroy(dot);
-    if (labelRed) sfText_destroy(labelRed);
-    if (labelGreen) sfText_destroy(labelGreen);
-    if (labelBlue) sfText_destroy(labelBlue);
-    if (font) sfFont_destroy(font);
+    if (labelRed)
+        sfText_destroy(labelRed);
+    if (labelGreen)
+        sfText_destroy(labelGreen);
+    if (labelBlue)
+        sfText_destroy(labelBlue);
+    if (font)
+        sfFont_destroy(font);
     sfRectangleShape_destroy(legendLine);
     sfVertexArray_destroy(axes);
     sfRenderWindow_destroy(win);
@@ -304,12 +323,15 @@ int main() {
     char s[9];
     if (scanf("%8s", s) == 1) {
         int len = 0;
-        while (len < 8 && s[len] != '\0') len++;
+        while (len < 8 && s[len] != '\0')
+            len++;
         printf("Было:  ");
-        for (int i = 0; i < len; i++) printf("%c ", s[i]);
+        for (int i = 0; i < len; i++)
+            printf("%c ", s[i]);
         shaker_str(s, len);
         printf("\nСтало: ");
-        for (int i = 0; i < len; i++) printf("%c ", s[i]);
+        for (int i = 0; i < len; i++)
+            printf("%c ", s[i]);
         printf("\n\n");
     }
 
@@ -317,7 +339,8 @@ int main() {
     int a[10];
     fill_rand(a, 10);
     printf("Было:  ");
-    for (int i = 0; i < 10; i++) printf("%d ", a[i]);
+    for (int i = 0; i < 10; i++)
+        printf("%d ", a[i]);
     int s1 = sum_arr(a, 10);
     int r1 = runs_arr(a, 10);
 
@@ -325,7 +348,8 @@ int main() {
     shaker(a, 10, &c, &m);
 
     printf("\nСтало: ");
-    for (int i = 0; i < 10; i++) printf("%d ", a[i]);
+    for (int i = 0; i < 10; i++)
+        printf("%d ", a[i]);
     int s2 = sum_arr(a, 10);
     int r2 = runs_arr(a, 10);
 
@@ -350,18 +374,30 @@ int main() {
         fill_dec(decv, n);
         fill_rand(rndv, n);
 
-        copy_arr(decv, w, n); bubble(w, n, &c, &m); int bdec = c + m;
-        copy_arr(rndv, w, n); bubble(w, n, &c, &m); int brnd = c + m;
-        copy_arr(incv, w, n); bubble(w, n, &c, &m); int binc = c + m;
+        copy_arr(decv, w, n);
+        bubble(w, n, &c, &m);
+        int bdec = c + m;
+        copy_arr(rndv, w, n);
+        bubble(w, n, &c, &m);
+        int brnd = c + m;
+        copy_arr(incv, w, n);
+        bubble(w, n, &c, &m);
+        int binc = c + m;
 
-        copy_arr(decv, w, n); shaker(w, n, &c, &m); int sdec = c + m;
-        copy_arr(rndv, w, n); shaker(w, n, &c, &m); int srnd = c + m;
-        copy_arr(incv, w, n); shaker(w, n, &c, &m); int sinc = c + m;
+        copy_arr(decv, w, n);
+        shaker(w, n, &c, &m);
+        int sdec = c + m;
+        copy_arr(rndv, w, n);
+        shaker(w, n, &c, &m);
+        int srnd = c + m;
+        copy_arr(incv, w, n);
+        shaker(w, n, &c, &m);
+        int sinc = c + m;
 
-        printf("| %3d | %7d %7d %7d | %7d %7d %7d |\n",
-               n, bdec, brnd, binc, sdec, srnd, sinc);
+        printf("| %3d | %7d %7d %7d | %7d %7d %7d |\n", n, bdec, brnd, binc, sdec, srnd, sinc);
 
-        copy_arr(rndv, w, n); select_sort(w, n, &c, &m);
+        copy_arr(rndv, w, n);
+        select_sort(w, n, &c, &m);
         gv[i] = c + m;
         gb[i] = brnd;
         gs[i] = srnd;

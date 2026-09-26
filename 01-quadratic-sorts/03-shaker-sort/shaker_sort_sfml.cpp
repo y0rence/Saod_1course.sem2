@@ -7,35 +7,42 @@
 
 using namespace std;
 
-void fill_inc(vector<int>& a) {
-    for (int i = 0; i < (int)a.size(); i++) a[i] = i + 1;
+void fill_inc(vector<int> &a) {
+    for (int i = 0; i < (int)a.size(); i++)
+        a[i] = i + 1;
 }
 
-void fill_dec(vector<int>& a) {
+void fill_dec(vector<int> &a) {
     int n = (int)a.size();
-    for (int i = 0; i < n; i++) a[i] = n - i;
+    for (int i = 0; i < n; i++)
+        a[i] = n - i;
 }
 
-void fill_rand(vector<int>& a) {
-    for (int i = 0; i < (int)a.size(); i++) a[i] = rand() % 100;
+void fill_rand(vector<int> &a) {
+    for (int i = 0; i < (int)a.size(); i++)
+        a[i] = rand() % 100;
 }
 
-int sum_arr(const vector<int>& a) {
+int sum_arr(const vector<int> &a) {
     int s = 0;
-    for (int x : a) s += x;
+    for (int x : a)
+        s += x;
     return s;
 }
 
-int runs_arr(const vector<int>& a) {
-    if (a.empty()) return 0;
+int runs_arr(const vector<int> &a) {
+    if (a.empty())
+        return 0;
     int r = 1;
     for (int i = 1; i < (int)a.size(); i++)
-        if (a[i] < a[i - 1]) r++;
+        if (a[i] < a[i - 1])
+            r++;
     return r;
 }
 
-void bubble(vector<int>& a, int& c, int& m) {
-    c = 0; m = 0;
+void bubble(vector<int> &a, int &c, int &m) {
+    c = 0;
+    m = 0;
     int n = (int)a.size();
     for (int i = 0; i < n - 1; i++) {
         for (int j = n - 1; j > i; j--) {
@@ -50,14 +57,16 @@ void bubble(vector<int>& a, int& c, int& m) {
     }
 }
 
-void select_sort(vector<int>& a, int& c, int& m) {
-    c = 0; m = 0;
+void select_sort(vector<int> &a, int &c, int &m) {
+    c = 0;
+    m = 0;
     int n = (int)a.size();
     for (int i = 0; i < n - 1; i++) {
         int k = i;
         for (int j = i + 1; j < n; j++) {
             c++;
-            if (a[j] < a[k]) k = j;
+            if (a[j] < a[k])
+                k = j;
         }
         if (k != i) {
             int t = a[i];
@@ -68,8 +77,9 @@ void select_sort(vector<int>& a, int& c, int& m) {
     }
 }
 
-void shaker(vector<int>& a, int& c, int& m) {
-    c = 0; m = 0;
+void shaker(vector<int> &a, int &c, int &m) {
+    c = 0;
+    m = 0;
     int l = 0;
     int r = (int)a.size() - 1;
     int k = r;
@@ -101,7 +111,7 @@ void shaker(vector<int>& a, int& c, int& m) {
     } while (l < r);
 }
 
-void shaker_str(string& s) {
+void shaker_str(string &s) {
     int l = 0;
     int r = (int)s.size() - 1;
     int k = r;
@@ -131,18 +141,22 @@ void shaker_str(string& s) {
 
 int max3(int a, int b, int c) {
     int x = a;
-    if (b > x) x = b;
-    if (c > x) x = c;
+    if (b > x)
+        x = b;
+    if (c > x)
+        x = c;
     return x;
 }
 
-void graph(const vector<int>& n, const vector<int>& v, const vector<int>& b, const vector<int>& s) {
+void graph(const vector<int> &n, const vector<int> &v, const vector<int> &b, const vector<int> &s) {
     const int W = 900, H = 600, O = 60;
 
     int k = (int)n.size();
-    if (k == 0) return;
+    if (k == 0)
+        return;
     int mx = 1;
-    for (int i = 0; i < k; i++) mx = max(mx, max3(v[i], b[i], s[i]));
+    for (int i = 0; i < k; i++)
+        mx = max(mx, max3(v[i], b[i], s[i]));
 
     sf::RenderWindow win(sf::VideoMode(sf::Vector2u((unsigned)W, (unsigned)H)), "График (Mf+Cf)");
     win.setFramerateLimit(60);
@@ -201,7 +215,8 @@ void graph(const vector<int>& n, const vector<int>& v, const vector<int>& b, con
 
     while (win.isOpen()) {
         while (const auto event = win.pollEvent()) {
-            if (event->is<sf::Event::Closed>()) win.close();
+            if (event->is<sf::Event::Closed>())
+                win.close();
         }
 
         win.clear(sf::Color::White);
@@ -270,13 +285,16 @@ int main() {
     cout << "Задание 1. Введи 8 символов: ";
     string s;
     cin >> s;
-    if ((int)s.size() > 8) s = s.substr(0, 8);
+    if ((int)s.size() > 8)
+        s = s.substr(0, 8);
 
     cout << "Было:  ";
-    for (char ch : s) cout << ch << ' ';
+    for (char ch : s)
+        cout << ch << ' ';
     shaker_str(s);
     cout << "\nСтало: ";
-    for (char ch : s) cout << ch << ' ';
+    for (char ch : s)
+        cout << ch << ' ';
     cout << "\n\n";
 
     cout << "Задание 2. Проверка массива (10 чисел):\n";
@@ -284,7 +302,8 @@ int main() {
     fill_rand(a);
 
     cout << "Было:  ";
-    for (int x : a) cout << x << ' ';
+    for (int x : a)
+        cout << x << ' ';
     int s1 = sum_arr(a);
     int r1 = runs_arr(a);
 
@@ -292,7 +311,8 @@ int main() {
     shaker(a, c, m);
 
     cout << "\nСтало: ";
-    for (int x : a) cout << x << ' ';
+    for (int x : a)
+        cout << x << ' ';
     int s2 = sum_arr(a);
     int r2 = runs_arr(a);
 
@@ -317,18 +337,31 @@ int main() {
         fill_dec(decv);
         fill_rand(rndv);
 
-        w = decv; bubble(w, c, m); int bdec = c + m;
-        w = rndv; bubble(w, c, m); int brnd = c + m;
-        w = incv; bubble(w, c, m); int binc = c + m;
+        w = decv;
+        bubble(w, c, m);
+        int bdec = c + m;
+        w = rndv;
+        bubble(w, c, m);
+        int brnd = c + m;
+        w = incv;
+        bubble(w, c, m);
+        int binc = c + m;
 
-        w = decv; shaker(w, c, m); int sdec = c + m;
-        w = rndv; shaker(w, c, m); int srnd = c + m;
-        w = incv; shaker(w, c, m); int sinc = c + m;
+        w = decv;
+        shaker(w, c, m);
+        int sdec = c + m;
+        w = rndv;
+        shaker(w, c, m);
+        int srnd = c + m;
+        w = incv;
+        shaker(w, c, m);
+        int sinc = c + m;
 
-        printf("| %3d | %7d %7d %7d | %7d %7d %7d |\n",
-               n, bdec, brnd, binc, sdec, srnd, sinc);
+        printf("| %3d | %7d %7d %7d | %7d %7d %7d |\n", n, bdec, brnd, binc, sdec, srnd, sinc);
 
-        w = rndv; select_sort(w, c, m); int v = c + m;
+        w = rndv;
+        select_sort(w, c, m);
+        int v = c + m;
         gv[idx] = v;
         gb[idx] = brnd;
         gs[idx] = srnd;
