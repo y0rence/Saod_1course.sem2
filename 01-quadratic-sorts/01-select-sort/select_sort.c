@@ -17,14 +17,14 @@ void FillDec(int a[], int n, int x) {
 void FillRand(int a[], int n) {
     srand(time(NULL));
     for (int i = 0; i < n; i++) {
-        a[i] = rand()%100;
+        a[i] = rand() % 100;
     }
 }
 
 int CheckSum(int a[], int n) {
     int sum = 0;
     for (int i = 0; i < n; i++) {
-        sum+=a[i];
+        sum += a[i];
     }
     return sum;
 }
@@ -46,23 +46,25 @@ int RunNumberAv(int a[], int n) {
             runs++;
         }
     }
-    return n/runs;
+    return n / runs;
 }
 
 void SelectSort(int a[], int n, int *countC, int *countM) {
     int temp = 0;
     *countM = 0;
     *countC = 0;
-    for (int i = 0; i < n-1; i++) {
+    for (int i = 0; i < n - 1; i++) {
         int k = i;
-        for (int j = i+1; j < n; j++) {
-            if (a[j] < a[k]) {k = j;}
+        for (int j = i + 1; j < n; j++) {
+            if (a[j] < a[k]) {
+                k = j;
+            }
             (*countC)++;
         }
         temp = a[k];
         a[k] = a[i];
         a[i] = temp;
-        (*countM)+=3;
+        (*countM) += 3;
     }
 }
 
@@ -70,27 +72,29 @@ void SelectSortEnhaced(int a[], int n, int *countC, int *countM) {
     int temp = 0;
     *countM = 0;
     *countC = 0;
-    for (int i = 0; i < n-1; i++) {
+    for (int i = 0; i < n - 1; i++) {
         int k = i;
-        for (int j = i+1; j < n; j++) {
-            if (a[j] < a[k]) {k = j;}
+        for (int j = i + 1; j < n; j++) {
+            if (a[j] < a[k]) {
+                k = j;
+            }
             (*countC)++;
         }
         if (k != i) {
             temp = a[k];
             a[k] = a[i];
             a[i] = temp;
-            (*countM)+=3;
+            (*countM) += 3;
         }
     }
 }
 
-int main(){
+int main() {
     printf("\nДемонстрация FillInc:\n");
     int a[10];
     int a1[10];
     FillInc(a, 10, 5);
-    for (int i = 0; i<10; i++) {
+    for (int i = 0; i < 10; i++) {
         printf("%d ", a[i]);
         a1[i] = a[i];
     }
@@ -100,7 +104,7 @@ int main(){
     int b[10];
     int b1[10];
     FillDec(b, 10, 5);
-    for (int i = 0; i<10; i++) {
+    for (int i = 0; i < 10; i++) {
         printf("%d ", b[i]);
         b1[i] = b[i];
     }
@@ -110,7 +114,7 @@ int main(){
     int c[100];
     FillRand(c, 100);
     int c1[100];
-    for (int i = 0; i<100; i++) {
+    for (int i = 0; i < 100; i++) {
         printf("%d ", c[i]);
         c1[i] = c[i];
     }
@@ -130,7 +134,7 @@ int main(){
     SelectSort(b, 10, &comparisonsB, &movesB);
     printf("\nотсортированный массив b:\n");
 
-    for (int i = 0; i<10; i++) {
+    for (int i = 0; i < 10; i++) {
         printf("%d ", b[i]);
     }
 
@@ -144,7 +148,7 @@ int main(){
     SelectSort(a, 10, &comparisonsA, &movesA);
     printf("\nотсортированный массив a:\n");
 
-    for (int i = 0; i<10; i++) {
+    for (int i = 0; i < 10; i++) {
         printf("%d ", a[i]);
     }
 
@@ -158,7 +162,7 @@ int main(){
     SelectSort(c, 100, &comparisonsC, &movesC);
     printf("\nотсортированный массив c:\n");
 
-    for (int i = 0; i<100; i++) {
+    for (int i = 0; i < 100; i++) {
         printf("%d ", c[i]);
     }
 
@@ -171,9 +175,9 @@ int main(){
     int comparisonsEnhB = 0, movesEnhB = 0;
     SelectSortEnhaced(b1, 10, &comparisonsEnhB, &movesEnhB);
 
-        printf("\nотсортированный массив b:\n");
+    printf("\nотсортированный массив b:\n");
 
-    for (int i = 0; i<10; i++) {
+    for (int i = 0; i < 10; i++) {
         printf("%d ", b1[i]);
     }
 
@@ -186,9 +190,9 @@ int main(){
     int comparisonsEnhA = 0, movesEnhA = 0;
     SelectSortEnhaced(a1, 10, &comparisonsEnhA, &movesEnhA);
 
-        printf("\nотсортированный массив a:\n");
+    printf("\nотсортированный массив a:\n");
 
-    for (int i = 0; i<10; i++) {
+    for (int i = 0; i < 10; i++) {
         printf("%d ", a1[i]);
     }
 
@@ -201,9 +205,9 @@ int main(){
     int comparisonsEnhC = 0, movesEnhC = 0;
     SelectSortEnhaced(c1, 100, &comparisonsEnhC, &movesEnhC);
 
-        printf("\nотсортированный массив c:\n");
+    printf("\nотсортированный массив c:\n");
 
-    for (int i = 0; i<100; i++) {
+    for (int i = 0; i < 100; i++) {
         printf("%d ", c1[i]);
     }
 
@@ -212,18 +216,21 @@ int main(){
     printf("\nСумма после сортировки: %d", CheckSum(c1, 100));
     printf("\nКоличество серий после сортировки: %d", RunNumber(c1, 100));
 
-    int movesBTheor = 3*(10 - 1);
-    int movesCTheor = 3*(100-1);
+    int movesBTheor = 3 * (10 - 1);
+    int movesCTheor = 3 * (100 - 1);
 
-    int compsBTheor = (10*10 - 10)/2;
-    int compsCTheor = (100*100 - 100)/2;
+    int compsBTheor = (10 * 10 - 10) / 2;
+    int compsCTheor = (100 * 100 - 100) / 2;
 
     printf("\n\n  N  |  M+C  | исходный М+С факт  |  улучшенный М+С факт  |");
     printf("\n     | теор  | убыв | случ | возр |  убыв |  случ |  возр |");
     printf("\n-----------------------------------------------------------");
-    printf("\n 10  | %d    | %d   |      | %d   |  %d   |       |  %d   |", movesBTheor+compsBTheor, comparisonsB+movesB, comparisonsA+movesA, comparisonsEnhB+movesEnhB, comparisonsEnhA+movesEnhA);
+    printf("\n 10  | %d    | %d   |      | %d   |  %d   |       |  %d   |",
+           movesBTheor + compsBTheor, comparisonsB + movesB, comparisonsA + movesA,
+           comparisonsEnhB + movesEnhB, comparisonsEnhA + movesEnhA);
     printf("\n-----------------------------------------------------------");
-    printf("\n 100 | %d  |      | %d |      |       |  %d |       |", movesCTheor+compsCTheor, comparisonsC+movesC, comparisonsEnhC+movesEnhC);
+    printf("\n 100 | %d  |      | %d |      |       |  %d |       |", movesCTheor + compsCTheor,
+           comparisonsC + movesC, comparisonsEnhC + movesEnhC);
 
     return 1;
 }
