@@ -1,15 +1,15 @@
 #if defined(__has_include)
-#  if __has_include(<CSFML/Graphics.h>)
-#    define HAS_SFML 1
-#    include <CSFML/Graphics.h>
-#  elif __has_include(<SFML/Graphics.h>)
-#    define HAS_SFML 1
-#    include <SFML/Graphics.h>
-#  else
-#    define HAS_SFML 0
-#  endif
+#if __has_include(<CSFML/Graphics.h>)
+#define HAS_SFML 1
+#include <CSFML/Graphics.h>
+#elif __has_include(<SFML/Graphics.h>)
+#define HAS_SFML 1
+#include <SFML/Graphics.h>
 #else
-#  define HAS_SFML 0
+#define HAS_SFML 0
+#endif
+#else
+#define HAS_SFML 0
 #endif
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,7 +23,7 @@ enum {
     METHOD_BUBBLE = 1,
     METHOD_SHAKER = 2,
     METHOD_INSERT = 3,
-    METHOD_SHELL  = 4
+    METHOD_SHELL = 4
 };
 
 typedef struct {
@@ -46,7 +46,8 @@ static long long control_sum(const int *a, int n) {
 }
 
 static int series_count(const int *a, int n) {
-    if (n <= 0) return 0;
+    if (n <= 0)
+        return 0;
     int count = 1;
     for (int i = 1; i < n; ++i) {
         if (a[i] < a[i - 1]) {
@@ -58,7 +59,8 @@ static int series_count(const int *a, int n) {
 
 static int generate_knuth_gaps(int n, int *gaps, int max_count) {
     int m = n < 4 ? 1 : (int)floor(log2((double)n)) - 1;
-    if (m > max_count) m = max_count;
+    if (m > max_count)
+        m = max_count;
 
     gaps[0] = 1;
     for (int i = 1; i < m; ++i) {
@@ -71,7 +73,8 @@ static int generate_tokuda_gaps(int n, int *gaps, int max_count) {
     int k = 0;
     while (k < max_count) {
         int h = (int)ceil((9.0 * pow(2.25, k) - 4.0) / 5.0);
-        if (h >= n) break;
+        if (h >= n)
+            break;
         gaps[k++] = h;
     }
     return k;
@@ -218,18 +221,21 @@ static void make_random_array(int *a, int n, int max_val) {
 static void print_char_array(const char *a, int n) {
     for (int i = 0; i < n; ++i) {
         printf("%c", a[i]);
-        if (i + 1 < n) printf(" ");
+        if (i + 1 < n)
+            printf(" ");
     }
     printf("\n");
 }
 
 static int read_first_8_chars(char *out) {
     char line[256];
-    if (!fgets(line, sizeof(line), stdin)) return 0;
+    if (!fgets(line, sizeof(line), stdin))
+        return 0;
 
     int k = 0;
     for (int i = 0; line[i] != '\0' && k < 8; ++i) {
-        if (line[i] == ' ' || line[i] == '\n' || line[i] == '\t') continue;
+        if (line[i] == ' ' || line[i] == '\n' || line[i] == '\t')
+            continue;
         out[k++] = line[i];
     }
     return k;
@@ -244,8 +250,9 @@ static void manual_shell_fio(void) {
     int got = read_first_8_chars(a);
 
     if (got < n) {
-        const char sample[8] = {'K','U','R','A','P','O','V','A'};
-        for (int i = 0; i < n; ++i) a[i] = sample[i];
+        const char sample[8] = {'K', 'U', 'R', 'A', 'P', 'O', 'V', 'A'};
+        for (int i = 0; i < n; ++i)
+            a[i] = sample[i];
         printf("Взята примерная последовательность: ");
         print_char_array(a, n);
     } else {
@@ -279,13 +286,16 @@ static void gaps_to_string_knuth(int n, char *buf, size_t size) {
     int m = generate_knuth_gaps(n, gaps, 32);
     int used = 0;
 
-    if (size == 0) return;
+    if (size == 0)
+        return;
     used += snprintf(buf + used, size - used, "{");
     for (int i = 0; i < m && used < (int)size; ++i) {
-        if (i > 0) used += snprintf(buf + used, size - used, ",");
+        if (i > 0)
+            used += snprintf(buf + used, size - used, ",");
         used += snprintf(buf + used, size - used, "%d", gaps[i]);
     }
-    if (used < (int)size) snprintf(buf + used, size - used, "}");
+    if (used < (int)size)
+        snprintf(buf + used, size - used, "}");
 }
 
 static void gaps_to_string_tokuda(int n, char *buf, size_t size) {
@@ -293,13 +303,16 @@ static void gaps_to_string_tokuda(int n, char *buf, size_t size) {
     int m = generate_tokuda_gaps(n, gaps, 32);
     int used = 0;
 
-    if (size == 0) return;
+    if (size == 0)
+        return;
     used += snprintf(buf + used, size - used, "{");
     for (int i = 0; i < m && used < (int)size; ++i) {
-        if (i > 0) used += snprintf(buf + used, size - used, ",");
+        if (i > 0)
+            used += snprintf(buf + used, size - used, ",");
         used += snprintf(buf + used, size - used, "%d", gaps[i]);
     }
-    if (used < (int)size) snprintf(buf + used, size - used, "}");
+    if (used < (int)size)
+        snprintf(buf + used, size - used, "}");
 }
 
 static void print_table_header(void) {
@@ -348,8 +361,8 @@ static void run_table(void) {
 
         char gaps_buf[64];
         gaps_to_string_knuth(n, gaps_buf, sizeof(gaps_buf));
-        printf("| %-4d | %-20s | %-13lld | %-13lld |\n",
-               n, gaps_buf, st_insert.moves + st_insert.comps, st_shell.moves + st_shell.comps);
+        printf("| %-4d | %-20s | %-13lld | %-13lld |\n", n, gaps_buf,
+               st_insert.moves + st_insert.comps, st_shell.moves + st_shell.comps);
 
         free(base);
         free(a_shell);
@@ -359,10 +372,8 @@ static void run_table(void) {
     printf("+------+----------------------+---------------+---------------+\n");
     printf("\nПроверка (контрольная сумма и серии):\n");
     for (int idx = 0; idx < count; ++idx) {
-        printf("n=%d: сумма %lld -> %lld, серии %d -> %d\n",
-               sizes[idx],
-               sums_before[idx], sums_after[idx],
-               series_before_arr[idx], series_after_arr[idx]);
+        printf("n=%d: сумма %lld -> %lld, серии %d -> %d\n", sizes[idx], sums_before[idx],
+               sums_after[idx], series_before_arr[idx], series_after_arr[idx]);
     }
 }
 
@@ -373,10 +384,12 @@ static void run_shell_gap_table(void) {
     long long total_tokuda = 0;
 
     printf("\nЗадание 4*: Исследование трудоемкости метода Шелла (разные шаги)\n");
-    printf("+------+----------------------+---------------+----------------------------+---------------+\n");
-    printf("| %-4s | %-20s | %-13s | %-26s | %-13s |\n",
-           "n", "Knuth h1..hm", "Shell M+C", "Tokuda h1..hm", "Shell M+C");
-    printf("+------+----------------------+---------------+----------------------------+---------------+\n");
+    printf("+------+----------------------+---------------+----------------------------+-----------"
+           "----+\n");
+    printf("| %-4s | %-20s | %-13s | %-26s | %-13s |\n", "n", "Knuth h1..hm", "Shell M+C",
+           "Tokuda h1..hm", "Shell M+C");
+    printf("+------+----------------------+---------------+----------------------------+-----------"
+           "----+\n");
 
     for (int idx = 0; idx < count; ++idx) {
         int n = sizes[idx];
@@ -404,16 +417,15 @@ static void run_shell_gap_table(void) {
         total_knuth += knuth_mc;
         total_tokuda += tokuda_mc;
 
-        printf("| %-4d | %-20s | %-13lld | %-26s | %-13lld |\n",
-               n,
-               knuth_buf, knuth_mc,
-               tokuda_buf, tokuda_mc);
+        printf("| %-4d | %-20s | %-13lld | %-26s | %-13lld |\n", n, knuth_buf, knuth_mc, tokuda_buf,
+               tokuda_mc);
 
         free(base);
         free(a_knuth);
         free(a_tokuda);
     }
-    printf("+------+----------------------+---------------+----------------------------+---------------+\n");
+    printf("+------+----------------------+---------------+----------------------------+-----------"
+           "----+\n");
     if (total_knuth < total_tokuda) {
         printf("Вывод: по сумме Mf+Cf лучше последовательность Кнута.\n");
     } else if (total_tokuda < total_knuth) {
@@ -470,9 +482,8 @@ static void run_quadratic_table(void) {
 }
 
 #if HAS_SFML
-static sfVertexArray *build_line(const int *ns, const long long *ys, int count,
-                                 float x0, float y0, float x_scale, float y_scale,
-                                 sfColor color) {
+static sfVertexArray *build_line(const int *ns, const long long *ys, int count, float x0, float y0,
+                                 float x_scale, float y_scale, sfColor color) {
     sfVertexArray *line = sfVertexArray_create();
     sfVertexArray_setPrimitiveType(line, sfLineStrip);
     for (int i = 0; i < count; ++i) {
@@ -532,7 +543,8 @@ static void draw_graph(void) {
     long long max_y = 0;
     for (int i = 0; i < GRAPH_POINTS; ++i) {
         for (int m = 0; m < METHOD_COUNT; ++m) {
-            if (data[i][m] > max_y) max_y = data[i][m];
+            if (data[i][m] > max_y)
+                max_y = data[i][m];
         }
     }
 
@@ -546,15 +558,12 @@ static void draw_graph(void) {
     float x_scale = workWidth / (float)(ns[GRAPH_POINTS - 1] - ns[0]);
     float y_scale = workHeight / (float)max_y;
 
-    sfRenderWindow *window = sfRenderWindow_create(
-        (sfVideoMode){width, height, 32},
-        "ShellSort graph (M+C)",
-        sfResize | sfClose,
-        sfWindowed,
-        NULL
-    );
+    sfRenderWindow *window =
+        sfRenderWindow_create((sfVideoMode){width, height, 32}, "ShellSort graph (M+C)",
+                              sfResize | sfClose, sfWindowed, NULL);
 
-    if (!window) return;
+    if (!window)
+        return;
     sfRenderWindow_setFramerateLimit(window, 60);
 
     sfRectangleShape *axisX = sfRectangleShape_create();
@@ -588,32 +597,19 @@ static void draw_graph(void) {
         grid[g++] = line;
     }
 
-    sfColor colors[METHOD_COUNT] = {
-        sfRed,
-        sfBlue,
-        sfGreen,
-        sfColor_fromRGB(255, 140, 0),
-        sfMagenta
-    };
+    sfColor colors[METHOD_COUNT] = {sfRed, sfBlue, sfGreen, sfColor_fromRGB(255, 140, 0),
+                                    sfMagenta};
 
-    const char *labels[METHOD_COUNT] = {
-        "Select",
-        "Bubble",
-        "Shaker",
-        "Insert",
-        "Shell"
-    };
+    const char *labels[METHOD_COUNT] = {"Select", "Bubble", "Shaker", "Insert", "Shell"};
 
     sfFont *font = NULL;
     const char *font_paths[] = {
-        "./font.ttf",
-        "/System/Library/Fonts/Supplemental/Arial Unicode.ttf",
-        "/System/Library/Fonts/Supplemental/Arial.ttf",
-        "/System/Library/Fonts/SFNS.ttf"
-    };
+        "./font.ttf", "/System/Library/Fonts/Supplemental/Arial Unicode.ttf",
+        "/System/Library/Fonts/Supplemental/Arial.ttf", "/System/Library/Fonts/SFNS.ttf"};
     for (size_t i = 0; i < sizeof(font_paths) / sizeof(font_paths[0]); ++i) {
         font = sfFont_createFromFile(font_paths[i]);
-        if (font) break;
+        if (font)
+            break;
     }
 
     sfRectangleShape *legend_boxes[METHOD_COUNT];
@@ -625,14 +621,16 @@ static void draw_graph(void) {
         for (int m = 0; m < METHOD_COUNT; ++m) {
             legend_boxes[m] = sfRectangleShape_create();
             sfRectangleShape_setSize(legend_boxes[m], (sfVector2f){12.0f, 12.0f});
-            sfRectangleShape_setPosition(legend_boxes[m], (sfVector2f){legend_x, legend_y + m * line_h});
+            sfRectangleShape_setPosition(legend_boxes[m],
+                                         (sfVector2f){legend_x, legend_y + m * line_h});
             sfRectangleShape_setFillColor(legend_boxes[m], colors[m]);
 
             legend_texts[m] = sfText_create(font);
             sfText_setCharacterSize(legend_texts[m], 14);
             sfText_setFillColor(legend_texts[m], sfWhite);
             sfText_setString(legend_texts[m], labels[m]);
-            sfText_setPosition(legend_texts[m], (sfVector2f){legend_x + 18.0f, legend_y + m * line_h - 3.0f});
+            sfText_setPosition(legend_texts[m],
+                               (sfVector2f){legend_x + 18.0f, legend_y + m * line_h - 3.0f});
         }
     } else {
         printf("Не найден шрифт для подписей графика. Положите font.ttf рядом с программой.\n");
@@ -641,10 +639,9 @@ static void draw_graph(void) {
     sfVertexArray *lines[METHOD_COUNT];
     for (int m = 0; m < METHOD_COUNT; ++m) {
         long long ys[GRAPH_POINTS];
-        for (int i = 0; i < GRAPH_POINTS; ++i) ys[i] = data[i][m];
-        lines[m] = build_line(ns, ys, GRAPH_POINTS,
-                              originX, originY,
-                              x_scale, y_scale, colors[m]);
+        for (int i = 0; i < GRAPH_POINTS; ++i)
+            ys[i] = data[i][m];
+        lines[m] = build_line(ns, ys, GRAPH_POINTS, originX, originY, x_scale, y_scale, colors[m]);
     }
 
     while (sfRenderWindow_isOpen(window)) {
@@ -691,7 +688,8 @@ static void draw_graph(void) {
     sfRectangleShape_destroy(axisY);
     sfRenderWindow_destroy(window);
 
-    printf("\nЦвета линий: красный-Select, синий-Bubble, зеленый-Shaker, оранжевый-Insert, розовый-Shell\n");
+    printf("\nЦвета линий: красный-Select, синий-Bubble, зеленый-Shaker, оранжевый-Insert, "
+           "розовый-Shell\n");
 }
 #else
 static void draw_graph(void) {
