@@ -29,7 +29,8 @@ int CheckSum(const int a[], int n) {
 }
 
 int RunNumber(const int a[], int n) {
-    if (n <= 0) return 0;
+    if (n <= 0)
+        return 0;
     int runs = 1;
     for (int i = 1; i < n; i++) {
         if (a[i] < a[i - 1]) {
@@ -40,7 +41,8 @@ int RunNumber(const int a[], int n) {
 }
 
 int RunNumberAv(const int a[], int n) {
-    if (n <= 0) return 0;
+    if (n <= 0)
+        return 0;
     int runs = RunNumber(a, n);
     return n / runs;
 }
@@ -53,7 +55,8 @@ void SelectSort(int a[], int n, int *countC, int *countM) {
     for (int i = 0; i < n - 1; i++) {
         int k = i;
         for (int j = i + 1; j < n; j++) {
-            if (a[j] < a[k]) k = j;
+            if (a[j] < a[k])
+                k = j;
             (*countC)++;
         }
         temp = a[k];
@@ -71,7 +74,8 @@ void SelectSortEnhanced(int a[], int n, int *countC, int *countM) {
     for (int i = 0; i < n - 1; i++) {
         int k = i;
         for (int j = i + 1; j < n; j++) {
-            if (a[j] < a[k]) k = j;
+            if (a[j] < a[k])
+                k = j;
             (*countC)++;
         }
         if (k != i) {
