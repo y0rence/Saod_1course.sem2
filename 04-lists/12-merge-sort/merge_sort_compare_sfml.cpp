@@ -14,12 +14,12 @@ long long moveCount = 0;
 
 struct List {
     int data;
-    List* next;
+    List *next;
 };
 
 struct Queue {
-    List* head;
-    List* tail;
+    List *head;
+    List *tail;
 };
 
 void resetCounters() {
@@ -27,13 +27,13 @@ void resetCounters() {
     moveCount = 0;
 }
 
-void initQueue(Queue* q) {
+void initQueue(Queue *q) {
     q->head = NULL;
     q->tail = NULL;
 }
 
-void moveToQueue(List*& list, Queue* q) {
-    List* p = list;
+void moveToQueue(List *&list, Queue *q) {
+    List *p = list;
     list = list->next;
     p->next = NULL;
 
@@ -46,15 +46,15 @@ void moveToQueue(List*& list, Queue* q) {
     moveCount++;
 }
 
-List* push(List* head, int value) {
-    List* p = new List;
+List *push(List *head, int value) {
+    List *p = new List;
     p->data = value;
     p->next = head;
     return p;
 }
 
-List* createAscendingList(int n) {
-    List* head = NULL;
+List *createAscendingList(int n) {
+    List *head = NULL;
 
     for (int i = n; i >= 1; i--) {
         head = push(head, i);
@@ -63,8 +63,8 @@ List* createAscendingList(int n) {
     return head;
 }
 
-List* createDescendingList(int n) {
-    List* head = NULL;
+List *createDescendingList(int n) {
+    List *head = NULL;
 
     for (int i = 1; i <= n; i++) {
         head = push(head, i);
@@ -73,8 +73,8 @@ List* createDescendingList(int n) {
     return head;
 }
 
-List* createRandomList(int n) {
-    List* head = NULL;
+List *createRandomList(int n) {
+    List *head = NULL;
 
     for (int i = 0; i < n; i++) {
         head = push(head, rand() % 100 + 10);
@@ -83,7 +83,7 @@ List* createRandomList(int n) {
     return head;
 }
 
-void printList(List* head) {
+void printList(List *head) {
     cout << "\nСписок: ";
 
     while (head != NULL) {
@@ -94,7 +94,7 @@ void printList(List* head) {
     cout << "\n";
 }
 
-int sumList(List* head) {
+int sumList(List *head) {
     int sum = 0;
 
     while (head != NULL) {
@@ -105,7 +105,7 @@ int sumList(List* head) {
     return sum;
 }
 
-int countList(List* head) {
+int countList(List *head) {
     int count = 0;
 
     while (head != NULL) {
@@ -116,15 +116,15 @@ int countList(List* head) {
     return count;
 }
 
-void deleteList(List** head) {
+void deleteList(List **head) {
     while (*head != NULL) {
-        List* temp = *head;
+        List *temp = *head;
         *head = (*head)->next;
         delete temp;
     }
 }
 
-void calculateTheoretical(int n, long long& theoryC, long long& theoryM) {
+void calculateTheoretical(int n, long long &theoryC, long long &theoryM) {
     int log2n = 0;
 
     while ((1 << log2n) < n) {
@@ -135,7 +135,7 @@ void calculateTheoretical(int n, long long& theoryC, long long& theoryM) {
     theoryM = (long long)n * log2n + n;
 }
 
-void splitList(List* S, List*& a, List*& b) {
+void splitList(List *S, List *&a, List *&b) {
     if (S == NULL) {
         a = NULL;
         b = NULL;
@@ -145,8 +145,8 @@ void splitList(List* S, List*& a, List*& b) {
     a = S;
     b = S->next;
 
-    List* k = a;
-    List* p = b;
+    List *k = a;
+    List *p = b;
 
     while (p != NULL) {
         k->next = p->next;
@@ -155,7 +155,7 @@ void splitList(List* S, List*& a, List*& b) {
     }
 }
 
-void mergeSeries(List*& a, int q, List*& b, int r, Queue* c) {
+void mergeSeries(List *&a, int q, List *&b, int r, Queue *c) {
     while (q != 0 && r != 0) {
         compCount++;
 
@@ -179,13 +179,13 @@ void mergeSeries(List*& a, int q, List*& b, int r, Queue* c) {
     }
 }
 
-void mergeSort(List*& S, int n) {
+void mergeSort(List *&S, int n) {
     if (S == NULL || S->next == NULL) {
         return;
     }
 
-    List* a;
-    List* b;
+    List *a;
+    List *b;
     splitList(S, a, b);
 
     Queue c0;
@@ -233,9 +233,9 @@ void printMergeSortTable() {
     printf("-------------------------------------------------------------\n");
 
     for (int n = 100; n <= 500; n += 100) {
-        List* dec = createDescendingList(n);
-        List* rnd = createRandomList(n);
-        List* asc = createAscendingList(n);
+        List *dec = createDescendingList(n);
+        List *rnd = createRandomList(n);
+        List *asc = createAscendingList(n);
 
         calculateTheoretical(n, theoryC, theoryM);
 
@@ -251,8 +251,8 @@ void printMergeSortTable() {
         mergeSort(asc, n);
         long long ascFact = compCount + moveCount;
 
-        printf("%-5d|%-15lld|%-10lld|%-10lld|%-10lld|\n",
-               n, theoryC + theoryM, decFact, rndFact, ascFact);
+        printf("%-5d|%-15lld|%-10lld|%-10lld|%-10lld|\n", n, theoryC + theoryM, decFact, rndFact,
+               ascFact);
 
         deleteList(&dec);
         deleteList(&rnd);
@@ -260,8 +260,8 @@ void printMergeSortTable() {
     }
 }
 
-int* createRandomArray(int n) {
-    int* a = new int[n];
+int *createRandomArray(int n) {
+    int *a = new int[n];
 
     for (int i = 0; i < n; i++) {
         a[i] = rand() % 100 + 10;
@@ -270,7 +270,7 @@ int* createRandomArray(int n) {
     return a;
 }
 
-void swapWithCount(int& a, int& b) {
+void swapWithCount(int &a, int &b) {
     int temp = a;
     a = b;
     b = temp;
@@ -284,15 +284,18 @@ void buildHeap(int a[], int L, int R) {
 
     while (true) {
         int j = 2 * i + 1;
-        if (j > R) break;
+        if (j > R)
+            break;
 
         if (j < R) {
             compCount++;
-            if (a[j + 1] <= a[j]) j++;
+            if (a[j + 1] <= a[j])
+                j++;
         }
 
         compCount++;
-        if (x <= a[j]) break;
+        if (x <= a[j])
+            break;
 
         a[i] = a[j];
         moveCount++;
@@ -320,8 +323,10 @@ void quickSort(int a[], int L, int R) {
     int j = R;
 
     while (i <= j) {
-        while (compCount++, a[i] < x) i++;
-        while (compCount++, a[j] > x) j--;
+        while (compCount++, a[i] < x)
+            i++;
+        while (compCount++, a[j] > x)
+            j--;
 
         if (i <= j) {
             swapWithCount(a[i], a[j]);
@@ -330,12 +335,14 @@ void quickSort(int a[], int L, int R) {
         }
     }
 
-    if (L < j) quickSort(a, L, j);
-    if (i < R) quickSort(a, i, R);
+    if (L < j)
+        quickSort(a, L, j);
+    if (i < R)
+        quickSort(a, i, R);
 }
 
 long long getHeapSortCost(int n) {
-    int* a = createRandomArray(n);
+    int *a = createRandomArray(n);
 
     resetCounters();
     heapSort(a, n);
@@ -347,7 +354,7 @@ long long getHeapSortCost(int n) {
 }
 
 long long getQuickSortCost(int n) {
-    int* a = createRandomArray(n);
+    int *a = createRandomArray(n);
 
     resetCounters();
     quickSort(a, 0, n - 1);
@@ -359,7 +366,7 @@ long long getQuickSortCost(int n) {
 }
 
 long long getMergeSortCost(int n) {
-    List* list = createRandomList(n);
+    List *list = createRandomList(n);
 
     resetCounters();
     mergeSort(list, n);
@@ -370,34 +377,32 @@ long long getMergeSortCost(int n) {
     return cost;
 }
 
-bool loadFont(sf::Font& font) {
-    const string paths[] = {
-        "/System/Library/Fonts/Supplemental/Arial.ttf",
-        "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
-        "/System/Library/Fonts/Helvetica.ttc",
-        "arial.ttf"
-    };
+bool loadFont(sf::Font &font) {
+    const string paths[] = {"/System/Library/Fonts/Supplemental/Arial.ttf",
+                            "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
+                            "/System/Library/Fonts/Helvetica.ttc", "arial.ttf"};
 
-    for (const string& path : paths) {
-        if (font.openFromFile(path)) return true;
+    for (const string &path : paths) {
+        if (font.openFromFile(path))
+            return true;
     }
     return false;
 }
 
-sf::Vector2f getPoint(int index, long long value, int count, long long maxValue,
-                      float left, float top, float width, float height) {
+sf::Vector2f getPoint(int index, long long value, int count, long long maxValue, float left,
+                      float top, float width, float height) {
     float x = left + index * (width / (count - 1));
     float y = top + height - ((float)value / maxValue) * height;
     return sf::Vector2f(x, y);
 }
 
-void drawPolyline(sf::RenderTarget& target, const vector<long long>& values,
-                  long long maxValue, sf::Color color,
-                  float left, float top, float width, float height) {
+void drawPolyline(sf::RenderTarget &target, const vector<long long> &values, long long maxValue,
+                  sf::Color color, float left, float top, float width, float height) {
     sf::VertexArray line(sf::PrimitiveType::LineStrip, values.size());
 
     for (int i = 0; i < (int)values.size(); i++) {
-        line[i].position = getPoint(i, values[i], (int)values.size(), maxValue, left, top, width, height);
+        line[i].position =
+            getPoint(i, values[i], (int)values.size(), maxValue, left, top, width, height);
         line[i].color = color;
     }
 
@@ -407,13 +412,14 @@ void drawPolyline(sf::RenderTarget& target, const vector<long long>& values,
         sf::CircleShape point(5);
         point.setFillColor(color);
         point.setOrigin({5, 5});
-        point.setPosition(getPoint(i, values[i], (int)values.size(), maxValue, left, top, width, height));
+        point.setPosition(
+            getPoint(i, values[i], (int)values.size(), maxValue, left, top, width, height));
         target.draw(point);
     }
 }
 
-void drawText(sf::RenderTarget& target, sf::Font& font, const string& text,
-              float x, float y, int size, sf::Color color) {
+void drawText(sf::RenderTarget &target, sf::Font &font, const string &text, float x, float y,
+              int size, sf::Color color) {
     sf::Text t(font, text, size);
     t.setFillColor(color);
     t.setPosition({x, y});
@@ -444,9 +450,12 @@ void buildTask6GraphSFML() {
     }
 
     long long maxValue = 1;
-    for (long long value : heapValues) maxValue = max(maxValue, value);
-    for (long long value : quickValues) maxValue = max(maxValue, value);
-    for (long long value : mergeValues) maxValue = max(maxValue, value);
+    for (long long value : heapValues)
+        maxValue = max(maxValue, value);
+    for (long long value : quickValues)
+        maxValue = max(maxValue, value);
+    for (long long value : mergeValues)
+        maxValue = max(maxValue, value);
 
     const unsigned int windowWidth = 1000;
     const unsigned int windowHeight = 700;
@@ -493,7 +502,8 @@ void buildTask6GraphSFML() {
         texture.draw(tick);
 
         if (hasFont) {
-            drawText(texture, font, to_string(nValues[i]), x - 15, top + graphHeight + 15, 16, sf::Color::Black);
+            drawText(texture, font, to_string(nValues[i]), x - 15, top + graphHeight + 15, 16,
+                     sf::Color::Black);
         }
     }
 
@@ -507,7 +517,8 @@ void buildTask6GraphSFML() {
 
     if (hasFont) {
         drawText(texture, font, "Task 6*: Mfact + Cfact from N", 300, 20, 24, sf::Color::Black);
-        drawText(texture, font, "N", left + graphWidth + 20, top + graphHeight - 5, 18, sf::Color::Black);
+        drawText(texture, font, "N", left + graphWidth + 20, top + graphHeight - 5, 18,
+                 sf::Color::Black);
         drawText(texture, font, "M+C", 25, top - 35, 18, sf::Color::Black);
         drawText(texture, font, "HeapSort", 760, 90, 16, heapColor);
         drawText(texture, font, "QuickSort", 760, 115, 16, quickColor);
@@ -523,12 +534,14 @@ void buildTask6GraphSFML() {
         cout << "\nОшибка: не удалось сохранить task6_graph.png\n";
     }
 
-    sf::RenderWindow window(sf::VideoMode({windowWidth, windowHeight}), "Task 6*: Sorting complexity graph");
+    sf::RenderWindow window(sf::VideoMode({windowWidth, windowHeight}),
+                            "Task 6*: Sorting complexity graph");
     sf::Sprite sprite(texture.getTexture());
 
     while (window.isOpen()) {
         while (const auto event = window.pollEvent()) {
-            if (event->is<sf::Event::Closed>()) window.close();
+            if (event->is<sf::Event::Closed>())
+                window.close();
         }
 
         window.clear(sf::Color::White);
@@ -542,11 +555,11 @@ int main() {
 
     cout << "==================== Расщепление списка ====================\n";
 
-    List* list = createRandomList(20);
+    List *list = createRandomList(20);
     printList(list);
 
-    List* a;
-    List* b;
+    List *a;
+    List *b;
     splitList(list, a, b);
 
     cout << "\nСписок a после расщепления:";
