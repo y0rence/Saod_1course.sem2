@@ -72,6 +72,28 @@ Saod_1course.sem2/
     └── 15-hash-open-addressing/ hash_open_addressing.cpp
 ```
 
+### 📑 Задание и псевдокод по каждой работе
+
+У каждой работы свой README по единому шаблону: **файлы → задание → псевдокод → трудоёмкость → проверка правильности**.
+
+| № | Работа | Метод | Описание |
+|---|---|---|---|
+| 01 | Сортировка прямого выбора | `SelectSort` | [README](01-quadratic-sorts/01-select-sort/README.md) |
+| 02 | Пузырьковая сортировка | `BubbleSort` | [README](01-quadratic-sorts/02-bubble-sort/README.md) |
+| 03 | Шейкерная сортировка | `ShakerSort` | [README](01-quadratic-sorts/03-shaker-sort/README.md) |
+| 04 | Сортировка прямого включения | `InsertSort` | [README](01-quadratic-sorts/04-insert-sort/README.md) |
+| 05 | Метод Шелла | `ShellSort` | [README](02-advanced-sorts/05-shell-sort/README.md) |
+| 06 | Пирамидальная сортировка | `HeapSort` | [README](02-advanced-sorts/06-heap-sort/README.md) |
+| 07 | Быстрая сортировка | `QuickSort` | [README](02-advanced-sorts/07-quick-sort/README.md) |
+| 08 | Сортировка массивов структур | `StructSort` | [README](03-search/08-struct-sort/README.md) |
+| 09 | Индексация массивов | `IndexArrays` | [README](03-search/09-index-arrays/README.md) |
+| 10 | Быстрый двоичный поиск | `BinarySearch` | [README](03-search/10-binary-search/README.md) |
+| 11 | Стек и очередь | `StackQueue` | [README](04-lists/11-stack-queue/README.md) |
+| 12 | Сортировка прямого слияния | `MergeSort` | [README](04-lists/12-merge-sort/README.md) |
+| 13 | Цифровая сортировка | `DigitalSort` | [README](04-lists/13-digital-sort/README.md) |
+| 14 | Хеширование: прямое связывание | `HashChaining` | [README](05-hashing/14-hash-chaining/README.md) |
+| 15 | Хеширование: открытая адресация | `HashOpenAddressing` | [README](05-hashing/15-hash-open-addressing/README.md) |
+
 ---
 
 ## ⚡ Шпаргалка: все алгоритмы в одной таблице
@@ -580,6 +602,42 @@ OD
 
 - 🔍 Для поиска используется тот же цикл без записи `a_h ← x`.
 - 🧪 В программе число коллизий при цепочках, линейных и квадратичных пробах сравнивается для разных размеров таблицы `m`.
+
+---
+
+## 🌿 Ветки
+
+Каждая работа разрабатывалась в отдельной ветке и вливалась в `main` отдельным merge-коммитом (`--no-ff`), поэтому в истории видны границы работ:
+
+| Ветка | Содержимое |
+|---|---|
+| `chore/code-style` | единый стиль кода: конфигурация `.clang-format` |
+| `lab/01-select-sort` | Сортировка прямого выбора |
+| `lab/02-bubble-sort` | Пузырьковая сортировка |
+| `lab/03-shaker-sort` | Шейкерная сортировка |
+| `lab/04-insert-sort` | Сортировка прямого включения |
+| `lab/05-shell-sort` | Метод Шелла |
+| `lab/06-heap-sort` | Пирамидальная сортировка |
+| `lab/07-quick-sort` | Быстрая сортировка |
+| `lab/08-struct-sort` | Сортировка массивов структур |
+| `lab/09-index-arrays` | Индексация массивов |
+| `lab/10-binary-search` | Быстрый двоичный поиск |
+| `lab/11-stack-queue` | Стек и очередь |
+| `lab/12-merge-sort` | Сортировка прямого слияния |
+| `lab/13-digital-sort` | Цифровая сортировка |
+| `lab/14-hash-chaining` | Хеширование: прямое связывание |
+| `lab/15-hash-open-addressing` | Хеширование: открытая адресация |
+| `docs/readme` | оглавление работ и описание веток |
+
+```bash
+git log --graph --oneline --all
+```
+
+Весь код отформатирован одним `.clang-format` (LLVM, отступ 4 пробела, ширина строки 100) и не содержит комментариев: теория и псевдокод вынесены в README.
+
+```bash
+clang-format -i $(git ls-files '*.c' '*.cpp')
+```
 
 ---
 
